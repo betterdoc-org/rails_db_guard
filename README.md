@@ -2,7 +2,8 @@
 
 Prevents connecting to protected environments databases from other environments.
 
-Did you ever used `DATABASE_URL` from production in development? If yes, this is a gem for you. If not, some of your colleague did (or will), so this is a gem for you :)
+Have you ever used `DATABASE_URL` from production in development? If yes, this is a gem for you. If not, some of your colleague has (or will), so this is a gem for you :)
+
 It is super easy to forget and keep using production database locally and make a disaster. RailsDbGuard is here to protect you!
 
 ## Installation
@@ -41,8 +42,8 @@ config.active_record.protected_environments = %w[production staging]
 
 ## How it works
 
-Rails 5 ["added a feature"](https://github.com/rails/rails/pull/22967) that prevents destructive actions on production database. New database table `ar_internal_metadata` was added that will store environment name when you run `db:migrate` for the first time.
-Now every time you run destructive rake task Rails will raisei an exception  preventing the data loss. It works by comparing Rails environment with the environment value in the `ar_internal_metadata` table.
+Rails 5 [added a feature](https://github.com/rails/rails/pull/22967) that prevents destructive actions on production database. New database table `ar_internal_metadata` was added that will store environment name when you run `db:migrate` for the first time.
+Now every time you run destructive rake task Rails will raise an exception preventing the data loss. It works by comparing Rails environment with the environment value in the `ar_internal_metadata` table.
 
 But it will do nothing if you run "destructive" action from your app (console, test, ...). This is where RailsDbGuard comes into play. It will add a callback whenever database connection is established and raise an exception preventing you from accessing protected environment from other environments (You can access production database only from production Rails environment).
 
@@ -54,12 +55,12 @@ After checking out the repo, run `bin/setup` to install dependencies. You can al
 
 Testing is a bit specific cause we need to test when database connection is established and that is done for test database during test suite boot. Easiest solution we could think of is to have ActiveRecord models connecting to different databases so we can test what happens when connection is established. This also mean you will need to prepare database for each environment.
 
-  $ cd test/rails_app # to dummy rails app for testing
-  $ RAILS_ENV=test bundle exec rake db:migrate
-  $ RAILS_ENV=development bundle exec rake db:migrate
-  $ RAILS_ENV=production bundle exec rake db:migrate
-  $ cd ../.. # to gem root
-  # bundle exec rake test
+    $ cd test/rails_app # to dummy rails app for testing
+    $ RAILS_ENV=test bundle exec rake db:migrate
+    $ RAILS_ENV=development bundle exec rake db:migrate
+    $ RAILS_ENV=production bundle exec rake db:migrate
+    $ cd ../.. # to gem root
+    $ bundle exec rake test
 
 ## ToDo
 
