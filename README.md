@@ -53,7 +53,9 @@ After checking out the repo, run `bin/setup` to install dependencies. You can al
 
 ### Running tests
 
-Testing is a bit specific cause we need to test when database connection is established and that is done for test database during test suite boot. Easiest solution we could think of is to have ActiveRecord models connecting to different databases so we can test what happens when connection is established. This also mean you will need to prepare database for each environment.
+Testing is a bit specific cause we need to test callback on database connection establishing and that is done for test database during test suite boot.
+Easiest solution we could think of is to remove connection before each test and then manually connect in each test to desired database.
+This also mean you will need to prepare database for each environment.
 
     $ cd test/rails_app # to dummy rails app for testing
     $ RAILS_ENV=test bundle exec rake db:migrate
@@ -71,7 +73,7 @@ Testing is a bit specific cause we need to test when database connection is esta
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rails_db_guard. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/betterdoc-org/rails_db_guard. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
