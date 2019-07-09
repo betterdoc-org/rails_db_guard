@@ -6,8 +6,8 @@ require "rails_db_guard/version"
 Gem::Specification.new do |spec|
   spec.name          = "rails_db_guard"
   spec.version       = RailsDbGuard::VERSION
-  spec.authors       = ["Vlado Cingel"]
-  spec.email         = ["vladocingel@gmail.com"]
+  spec.authors       = ["BetterDoc GmbH"]
+  spec.email         = ["development@betterdoc.de"]
 
   spec.summary       = %q{Prevents connecting to protected environments databases from other environments}
   spec.homepage      = "https://www.github.com/betterdoc-org/rails_db_guard"

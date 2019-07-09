@@ -1,15 +1,16 @@
 # RailsDbGuard
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rails_db_guard`. To experiment with that code, run `bin/console` for an interactive prompt.
+Prevents connecting to protected environments databases from other environments.
 
-TODO: Delete this and the text above, and describe your gem
+Did you ever used `DATABASE_URL` from production in development? If yes, this is a gem for you. If not, some of your colleague did (or will), so this is a gem for you :)
+It is super easy to forget and keep using production database locally and make a disaster. RailsDbGuard is here to protect you!
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rails_db_guard'
+gem "rails_db_guard", group: [:development, :test]
 ```
 
 And then execute:
@@ -22,13 +23,50 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Just add `rails_db_guard` to your Gemfile and you are done. You don't need it in production so you can put it to all other groups.  It will raise and error if you try to connect to protected environment database from other environment.
+
+By default `production` is only protected environment so if you have other sensitive environments (staging for example) it would be like:
+
+```ruby
+# Gemfile
+group :staging, :development, :test do
+  gem "rails_db_guard"
+end
+```
+
+```ruby
+# config/application.rb
+config.active_record.protected_environments = %w[production staging]
+```
+
+## How it works
+
+Rails 5 ["added a feature"](https://github.com/rails/rails/pull/22967) that prevents destructive actions on production database. New database table `ar_internal_metadata` was added that will store environment name when you run `db:migrate` for the first time.
+Now every time you run destructive rake task Rails will raisei an exception  preventing the data loss. It works by comparing Rails environment with the environment value in the `ar_internal_metadata` table.
+
+But it will do nothing if you run "destructive" action from your app (console, test, ...). This is where RailsDbGuard comes into play. It will add a callback whenever database connection is established and raise an exception preventing you from accessing protected environment from other environments (You can access production database only from production Rails environment).
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+### Running tests
+
+Testing is a bit specific cause we need to test when database connection is established and that is done for test database during test suite boot. Easiest solution we could think of is to have ActiveRecord models connecting to different databases so we can test what happens when connection is established. This also mean you will need to prepare database for each environment.
+
+  $ cd test/rails_app # to dummy rails app for testing
+  $ RAILS_ENV=test bundle exec rake db:migrate
+  $ RAILS_ENV=development bundle exec rake db:migrate
+  $ RAILS_ENV=production bundle exec rake db:migrate
+  $ cd ../.. # to gem root
+  # bundle exec rake test
+
+## ToDo
+
+* MySQL adapter
+* CI setup (matrix for multiple database adapter and rails versions combinations)
+* Setup Rubocop
+* Add option to skip the check if `DISABLE_DATABASE_ENVIRONMENT_CHECK` environment variable is set
 
 ## Contributing
 
