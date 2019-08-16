@@ -25,3 +25,13 @@ jobs:
 
     - name: Run rubocop
       run: bundle exec rubocop
+
+    - name: Prepare test app
+      run: |
+        cd test/rails_app
+        RAILS_ENV=test bundle exec rake db:migrate
+        RAILS_ENV=development bundle exec rake db:migrate
+        RAILS_ENV=production bundle exec rake db:migrate
+
+    - name: Run tests
+      run: bundle exec rake test
