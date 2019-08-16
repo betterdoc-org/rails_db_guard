@@ -2,12 +2,17 @@ AllCops:
   TargetRubyVersion: 2.6
   Exclude:
     - "bin/console"
+    - "test/rails_app/db/schema.rb"
 
 Metrics/AbcSize:
   Exclude:
     - "test/**/*"
 
 Metrics/LineLength:
+  AllowHeredoc: true
+  AllowURI: true
+  IgnoreCopDirectives: true
+  Max: 120
   Exclude:
     - "authorize_that.gemspec"
     - "test/**/*"
@@ -22,3 +27,7 @@ Style/ClassAndModuleChildren:
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+Style/SymbolProc:
+  Exclude:
+    - test/rails_app/db/migrate/20190708175731_create_tables.rb

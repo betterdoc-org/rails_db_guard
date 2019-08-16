@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 require "rails_db_guard/version"
+require "rails_db_guard/railtie"
 
+# :nodoc:
 module RailsDbGuard
   class Error < StandardError; end
 
@@ -23,5 +25,3 @@ module RailsDbGuard
     end
   end
 end
-
-require "rails_db_guard/railtie"
