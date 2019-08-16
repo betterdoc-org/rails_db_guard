@@ -10,8 +10,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
 
-    - name: Docker image
-      uses: docker://circleci/ruby:2.6.2-node-browsers
+    - name: Build the Docker image
+      uses: docker build . --file Dockerfile
 
     - name: Bundle
       run: |
