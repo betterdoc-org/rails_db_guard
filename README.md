@@ -69,7 +69,6 @@ This also mean you will need to prepare database for each environment.
 * MySQL adapter
 * CI setup (matrix for multiple database adapter and rails versions combinations)
 * Setup Rubocop
-* Add option to skip the check if `DISABLE_DATABASE_ENVIRONMENT_CHECK` environment variable is set
 
 ## Contributing
 

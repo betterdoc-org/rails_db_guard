@@ -38,6 +38,14 @@ class RailsDbGuardTest < Minitest::Test
     end
   end
 
+  def test_it_does_not_raise_error_if_trying_to_connect_to_other_protected_environment_database_and_env_var_to_disable_check_is_set
+    ClimateControl.modify DISABLE_DATABASE_ENVIRONMENT_CHECK: "1" do
+      assert ActiveRecord::Base.protected_environments.include?("production")
+      connect_to(:production)
+      assert Foo.count
+    end
+  end
+
   private
 
   # Helper to establish new connection for each test
