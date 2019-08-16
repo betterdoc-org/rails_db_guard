@@ -10,7 +10,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
 
-    - name: Run bundle
+    - name: Setup Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: "2.6"
+
+    - name: Bundle
       run: |
         gem install bundler
         bundle install
