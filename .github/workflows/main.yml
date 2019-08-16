@@ -1,0 +1,23 @@
+name: CI
+
+on: [push]
+
+jobs:
+  lint:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+    - uses: actions/checkout@v1
+    
+    - name: Run bundle
+      run: bundle install
+    
+    - name: Run rubocop
+      run: bundle exec rubocop
+      
+    - name: Run a multi-line script
+      run: |
+        echo Add other actions to build,
+        echo test, and deploy your project.
