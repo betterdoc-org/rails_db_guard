@@ -15,6 +15,9 @@ jobs:
       with:
         ruby-version: 2.6.2
 
+    - name: Install sqlite3
+      run: apt-get install libsqlite3-dev
+
     - name: Bundle
       run: |
         gem install bundler -v 1.17.3
