@@ -10,13 +10,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
 
-    - name: Build the Docker image
-      uses: docker build . --file Dockerfile
+    - name: Set up Ruby 2.6
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6.2
 
     - name: Bundle
       run: |
-        gem install bundler -v "1.17.3"
-        bundle install
+        gem install bundler -v 1.17.3
+        bundle install --jobs 4 --retry 3
 
     - name: Run rubocop
       run: bundle exec rubocop
