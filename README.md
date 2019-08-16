@@ -1,5 +1,7 @@
 # RailsDbGuard
 
+[![Actions Status](https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/badge/betterdoc-org/rails_db_guard)](https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/results/betterdoc-org/rails_db_guard)
+
 Prevents connecting to protected environments databases from other environments.
 
 Have you ever used `DATABASE_URL` from production in development? If yes, this is a gem for you. If not, some of your colleague has (or will), so this is a gem for you :)
