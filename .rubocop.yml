@@ -1,0 +1,24 @@
+AllCops:
+  TargetRubyVersion: 2.6
+  Exclude:
+    - "bin/console"
+
+Metrics/AbcSize:
+  Exclude:
+    - "test/**/*"
+
+Metrics/LineLength:
+  Exclude:
+    - "authorize_that.gemspec"
+    - "test/**/*"
+
+Metrics/MethodLength:
+  Exclude:
+    - "test/**/*"
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - "test/**/*"
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes

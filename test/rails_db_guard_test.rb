@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class RailsDbGuardTest < Minitest::Test
@@ -50,6 +52,6 @@ class RailsDbGuardTest < Minitest::Test
 
   # Helper to establish new connection for each test
   def connect_to(env)
-    ActiveRecord::Base.establish_connection YAML.load(File.open(Rails.root.join("config/database.yml")).read)[env.to_s]
+    ActiveRecord::Base.establish_connection YAML.safe_load(File.open(Rails.root.join("config/database.yml")).read)[env.to_s]
   end
 end

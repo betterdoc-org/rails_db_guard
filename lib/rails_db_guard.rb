@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_db_guard/version"
 
 module RailsDbGuard
@@ -15,7 +17,7 @@ module RailsDbGuard
 
     def guard!(env)
       return if ENV.key?("DISABLE_DATABASE_ENVIRONMENT_CHECK")
-      return unless (ActiveRecord::Base.protected_environments.include?(env) && Rails.env != env)
+      return unless ActiveRecord::Base.protected_environments.include?(env) && Rails.env != env
 
       raise Error, "You are trying to connect to `#{env}` database from `#{Rails.env}` environment"
     end
